@@ -100,10 +100,12 @@ class aniDBabstractObject(object):
 
 
 class Anime(aniDBabstractObject):
-    def __init__(self, aniDB, name=None, aid=None, tvdbid=None, paramsA=None, autoCorrectName=False, load=False):
+    def __init__(self, aniDB, name=None, aid=None, tvdbid=None, paramsA=None, autoCorrectName=False, load=False, anidbMapPath=None, tvdbMapPath=None):
 
         self.maper = AniDBMaper()
-        self.tvDBMap = TvDBMap()
+        self.tvDBMap = TvDBMap(tvdbMapPath)
+        self.tvdbMapPath = tvdbMapPath
+        self.anidbMapPath = anidbMapPath
         self.allAnimeXML = None
 
         self.name = name
@@ -163,7 +165,7 @@ class Anime(aniDBabstractObject):
     #TODO: refactor and use the new functions in anidbFileinfo
     def _get_aid_from_xml(self, name):
         if not self.allAnimeXML:
-            self.allAnimeXML = aniDBfileInfo.read_anidb_xml()
+            self.allAnimeXML = aniDBfileInfo.read_anidb_xml(self.anidbMapPath)
 
         regex = re.compile('( \(\d{4}\))|[%s]' % re.escape(string.punctuation)) # remove any punctuation and e.g. ' (2011)'
         #regex = re.compile('[%s]'  % re.escape(string.punctuation)) # remove any punctuation and e.g. ' (2011)'
@@ -182,7 +184,7 @@ class Anime(aniDBabstractObject):
     #TODO: refactor and use the new functions in anidbFileinfo
     def _get_name_from_xml(self, aid, onlyMain=True):
         if not self.allAnimeXML:
-            self.allAnimeXML = aniDBfileInfo.read_anidb_xml()
+            self.allAnimeXML = aniDBfileInfo.read_anidb_xml(self.anidbMapPath)
 
         for anime in self.allAnimeXML.findall("anime"):
             if int(anime.get("aid", False)) == aid:
