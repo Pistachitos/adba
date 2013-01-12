@@ -57,8 +57,12 @@ def read_anidb_xml(filePath, forceDownload=False):
         filePath = os.path.join(os.path.dirname(os.path.abspath( __file__ )), "animetitles.xml")
         if not os.path.exists(filePath):
             forceDownload = True
+    elif os.path.isdir(filePath):
+        filePath = os.path.join(filePath, "animetitles.xml")
+
     if forceDownload:
-        download_tvdb_map_xml(filePath)    
+        download_tvdb_map_xml(filePath)
+
     return read_xml_into_etree(filePath)
 
 def read_tvdb_map_xml(filePath, forceDownload=False):
@@ -66,8 +70,12 @@ def read_tvdb_map_xml(filePath, forceDownload=False):
         filePath = os.path.join(os.path.dirname(os.path.abspath( __file__ )), "anime-list.xml")
         if not os.path.exists(filePath):
             forceDownload = True
+    elif os.path.isdir(filePath):
+        filePath = os.path.join(filePath, "anime-list.xml")
+
     if forceDownload:
         download_tvdb_map_xml(filePath)
+
     return read_xml_into_etree(filePath)
 
 def download_anidb_xml(filePath):
