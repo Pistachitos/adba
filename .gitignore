@@ -1,2 +1,21 @@
-*.pyc
+#  adba User Related   #
+######################
+adba/anime-list.xml
+adba/animetitles.xml
+
+#  Compiled source   #
+######################
+*.py[co]
 ._*
+
+#  IDE specific      #
+######################
+*.bak
+*.tmp
+*.wpr
+*.project
+*.pydevproject
+*.cproject
+*.tmproj
+*.tmproject
+*.sw?
